@@ -6,7 +6,11 @@ import com.santander.banco811.model.Usuario;
 import com.santander.banco811.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +28,11 @@ public class UsuarioController {
         return usuarioService.getAll(nome, page, size);
     }
 
+    @GetMapping("/search")
+    public List<Usuario> search(@RequestParam String search) {
+        return usuarioService.search(search);
+    }
+
     @GetMapping("/cpf")
     public Page<UsuarioResponse> getAllByCpf(
             @RequestParam String cpf,
@@ -33,8 +42,9 @@ public class UsuarioController {
         return usuarioService.getAllByCpf(cpf, page, size);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UsuarioResponse create(@RequestBody UsuarioRequest usuarioRequest) {
+    public UsuarioResponse create(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         return usuarioService.create(usuarioRequest);
     }
 

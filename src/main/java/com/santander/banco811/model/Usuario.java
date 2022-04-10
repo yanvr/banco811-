@@ -1,13 +1,10 @@
 package com.santander.banco811.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.santander.banco811.dto.UsuarioRequest;
-import com.santander.banco811.dto.UsuarioResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -55,11 +52,5 @@ public class Usuario {
         this.cpf = usuarioRequest.getCpf();
         this.nome = usuarioRequest.getNome();
         this.senha = usuarioRequest.getSenha();
-    }
-
-    public static Usuario toModel(UsuarioResponse usuarioResponse) {
-        Usuario usuario = new Usuario();
-        BeanUtils.copyProperties(usuarioResponse, usuario, "id");
-        return usuario;
     }
 }

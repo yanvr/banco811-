@@ -5,6 +5,7 @@ import com.santander.banco811.enums.TipoConta;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "conta")
 @Entity
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@ToString
 public class Conta {
 
     @Id
@@ -51,9 +54,19 @@ public class Conta {
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
 
+    @OneToMany(mappedBy = "conta")
+    private List<Transacao> transacoes;
+
     public static Conta of(ContaRequest contaRequest) {
         Conta conta = new Conta();
         BeanUtils.copyProperties(contaRequest, conta);
         return conta;
+    }
+
+    public Conta(ContaRequest contaRequest) {
+        this.numero = contaRequest.getNumero();
+        this.agencia = contaRequest.getAgencia();
+        this.saldo = contaRequest.getSaldo();
+        this.tipoConta = contaRequest.getTipoConta();
     }
 }

@@ -1,7 +1,9 @@
 package com.santander.banco811.repository;
 
+import com.santander.banco811.dto.ContaResponse;
 import com.santander.banco811.enums.TipoConta;
 import com.santander.banco811.model.Conta;
+import com.santander.banco811.projection.ContaRelatorioView;
 import com.santander.banco811.projection.ContaView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -51,4 +53,8 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
     );
 
     List<ContaView> findAllByTipoConta(TipoConta tipoConta);
+
+    List<ContaRelatorioView> findAllByUsuarioId(Integer id);
+
+    List<ContaResponse> findContasByDataCriacao(LocalDateTime dataCriacao);
 }

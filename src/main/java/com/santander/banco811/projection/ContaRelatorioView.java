@@ -3,14 +3,16 @@ package com.santander.banco811.projection;
 import com.santander.banco811.enums.TipoConta;
 import org.springframework.beans.factory.annotation.Value;
 
-public interface ContaView {
+import java.math.BigInteger;
 
-    Integer getSaldo();
+public interface ContaRelatorioView {
+
+    @Value("#{target.agencia + ' - ' + target.numero}")
+    String getAgenciaNumero();
 
     TipoConta getTipoConta();
 
-    @Value("#{target.numero + ' - ' + target.agencia}")
-    String getNumeroAgencia();
+    BigInteger getSaldo();
 
     UsuarioView getUsuario();
 }
